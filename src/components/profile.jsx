@@ -188,7 +188,7 @@ export default function ENSProfile({ initialENS = "" }) {
               disabled={!ens || loading}
               style={styles.btn}
             >
-              {loading ? "..." : "→"}
+              {loading ? "..." : "Search"}
             </button>
           </div>
         </div>
@@ -196,6 +196,11 @@ export default function ENSProfile({ initialENS = "" }) {
 
       {/* Main Content */}
       <main className="container" style={styles.main}>
+        {/* Hero Section - Show when no search has been made */}
+        {!loading && !error && !notFound && !hasData && (
+          <HeroSection />
+        )}
+
         {error && <ErrorCard message={error} />}
         {notFound && <NotFoundCard />}
         {loading && <LoadingCard />}
@@ -346,6 +351,56 @@ function LoadingCard() {
     <div style={styles.loading} className="fade-in">
       <div style={styles.spinner}></div>
       <p>Loading...</p>
+    </div>
+  );
+}
+
+function HeroSection() {
+  return (
+    <div style={styles.hero} className="fade-in">
+      <div style={styles.heroIcon}>
+        <svg width="80" height="80" viewBox="0 0 32 32" style={{filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))'}}>
+          <path fill="#627EEA" d="M16 0l-1 3.4v18.2l1 1 8-4.7z"/>
+          <path fill="#8A92B2" d="M16 0L8 17.9l8 4.7V0z"/>
+          <path fill="#627EEA" d="M16 24.6l-.6.7v6.1l.6 1.6 8-11.3z"/>
+          <path fill="#8A92B2" d="M16 32.9v-8.3L8 21.3z"/>
+          <path fill="#454A75" d="M16 22.6l8-4.7-8-3.6z"/>
+          <path fill="#8A92B2" d="M8 17.9l8 4.7v-8.3z"/>
+        </svg>
+      </div>
+      <h2 style={styles.heroTitle}>Explore Ethereum Name Service</h2>
+      <p style={styles.heroSubtitle}>Search any .eth name to view comprehensive blockchain data, social profiles, and cryptocurrency addresses</p>
+      <div style={styles.heroExamples}>
+        <p style={styles.heroExamplesLabel}>Try searching:</p>
+        <div style={styles.heroChips}>
+          <span style={styles.chip} className="mono">vitalik.eth</span>
+          <span style={styles.chip} className="mono">nick.eth</span>
+          <span style={styles.chip} className="mono">brantly.eth</span>
+        </div>
+      </div>
+      <div style={styles.heroFeatures}>
+        <div style={styles.feature} className="stagger-1">
+          <div style={styles.featureIcon}>👤</div>
+          <div style={styles.featureText}>
+            <h4>Profile Data</h4>
+            <p>Owner, resolver, and resolved addresses</p>
+          </div>
+        </div>
+        <div style={styles.feature} className="stagger-2">
+          <div style={styles.featureIcon}>💬</div>
+          <div style={styles.featureText}>
+            <h4>Social Records</h4>
+            <p>Twitter, GitHub, Discord, and more</p>
+          </div>
+        </div>
+        <div style={styles.feature} className="stagger-3">
+          <div style={styles.featureIcon}>💰</div>
+          <div style={styles.featureText}>
+            <h4>Crypto Addresses</h4>
+            <p>ETH, BTC, LTC and other chains</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -521,5 +576,84 @@ const styles = {
     textAlign: 'center',
     fontSize: '12px',
     color: 'var(--text-tertiary)',
+  },
+  hero: {
+    textAlign: 'center',
+    padding: 'var(--s-10) 0',
+    maxWidth: '800px',
+    margin: '0 auto',
+  },
+  heroIcon: {
+    marginBottom: 'var(--s-6)',
+    animation: 'float 3s ease-in-out infinite',
+  },
+  heroTitle: {
+    fontSize: '40px',
+    fontWeight: 800,
+    letterSpacing: '-0.03em',
+    marginBottom: 'var(--s-4)',
+  },
+  heroSubtitle: {
+    fontSize: '17px',
+    color: 'var(--text-secondary)',
+    lineHeight: 1.6,
+    marginBottom: 'var(--s-8)',
+  },
+  heroExamples: {
+    marginBottom: 'var(--s-8)',
+  },
+  heroExamplesLabel: {
+    fontSize: '13px',
+    color: 'var(--text-tertiary)',
+    fontWeight: 600,
+    textTransform: 'uppercase',
+    letterSpacing: '0.05em',
+    marginBottom: 'var(--s-3)',
+  },
+  heroChips: {
+    display: 'flex',
+    gap: 'var(--s-3)',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    padding: 'var(--s-2) var(--s-4)',
+    background: 'var(--bg-elevated)',
+    border: '1px solid var(--border)',
+    borderRadius: 'var(--r-md)',
+    fontSize: '13px',
+    color: 'var(--text-secondary)',
+    transition: 'all var(--fast) var(--ease)',
+    cursor: 'default',
+  },
+  heroFeatures: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+    gap: 'var(--s-6)',
+    marginTop: 'var(--s-8)',
+  },
+  feature: {
+    textAlign: 'left',
+    padding: 'var(--s-5)',
+    border: '1px solid var(--border)',
+    borderRadius: 'var(--r-lg)',
+    transition: 'all var(--base) var(--ease)',
+    opacity: 0,
+  },
+  featureIcon: {
+    fontSize: '32px',
+    marginBottom: 'var(--s-3)',
+  },
+  featureText: {
+    h4: {
+      fontSize: '15px',
+      fontWeight: 600,
+      marginBottom: 'var(--s-2)',
+    },
+    p: {
+      fontSize: '14px',
+      color: 'var(--text-secondary)',
+      lineHeight: 1.5,
+    },
   },
 };
