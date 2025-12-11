@@ -4,7 +4,7 @@ import ENSProfile from './components/profile'
 import ENSGraph from './components/ensSocial'
 
 function App() {
-  const [view, setView] = useState('graph') // 'graph' or 'profile'
+  const [view, setView] = useState('profile') // 'graph' or 'profile'
 
   return (
     <div className="App">
